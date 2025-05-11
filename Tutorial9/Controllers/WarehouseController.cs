@@ -36,4 +36,28 @@ public class WarehouseController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+    
+    [HttpPost("procedure")]
+    public async Task<ActionResult> CreateProductWarehouseWithProcedure(ProductWarehouseDTO productWarehouseDto)
+    {
+        try
+        {
+            int generatedId = await _warehouseService.CreateProductWarehouseProcedureAsync(productWarehouseDto);
+            return Ok(generatedId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            if (e.Message.Contains("IdWarehouse"))
+                return NotFound("IdWarehouse not  found");
+            
+            if (e.Message.Contains("no order to fulfill"))
+                return BadRequest("No order to fulfill");
+            
+            if (e.Message.Contains("IdProduct"))
+                return NotFound("IdProduct not found");
+            
+            return StatusCode(500, "ERROR");
+        }
+    }
 }

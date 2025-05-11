@@ -4,5 +4,6 @@ namespace Tutorial9.Services;
 
 public interface IWarehouseService
 {
-    Task<int> AddProductToWarehouseAsync(ProductWarehouseDTO request);
+    Task<int> AddProductToWarehouseAsync(ProductWarehouseDTO productWarehouseDto);
+    Task<int> CreateProductWarehouseProcedureAsync(ProductWarehouseDTO request);
 }
